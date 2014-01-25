@@ -36,6 +36,7 @@ class Welcome extends CI_Controller {
 		$data['main_content'] = 'welcome_message';
 		$data['where'] = $this->uri->segment(1);
 		$data['whereiam'] = $this->uri->segment(1);
+		$data['pics'] = get_filenames('./uploads/');
 		if($this->session->userdata('enable_profiler') == 'TRUE'){
 			$this->output->enable_profiler(TRUE);
 		}
@@ -54,14 +55,29 @@ class Welcome extends CI_Controller {
 
 		if ( ! $this->upload->do_upload())
 		{
-			$error = array('error' => $this->upload->display_errors());
-
+			$data['title'] = 'Hunt';
+			$data['projectname'] = 'Hunt';
+			$data['error'] = array('error' => $this->upload->display_errors());
+			$data['where'] = $this->uri->segment(1);
+			$data['whereiam'] = $this->uri->segment(1);
+			$data['pics'] = get_filenames('./uploads/');
+			if($this->session->userdata('enable_profiler') == 'TRUE'){
+				$this->output->enable_profiler(TRUE);
+			}
 			$data['main_content'] = "welcome_message";
-			$this->load->view('main/main_template',$data.$error);
+			$this->load->view('main/main_template',$data);
 		}
 		else
 		{
+			$data['title'] = 'Hunt';
+			$data['projectname'] = 'Hunt';
 			$data = array('upload_data' => $this->upload->data());
+			$data['where'] = $this->uri->segment(1);
+			$data['whereiam'] = $this->uri->segment(1);
+			$data['pics'] = get_filenames('./uploads/');
+			if($this->session->userdata('enable_profiler') == 'TRUE'){
+				$this->output->enable_profiler(TRUE);
+			}
 			$data['main_content'] = "upload_success";
 			$this->load->view('main/main_template',$data);
 		}
